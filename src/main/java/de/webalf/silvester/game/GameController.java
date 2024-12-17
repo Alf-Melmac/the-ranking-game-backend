@@ -1,6 +1,8 @@
 package de.webalf.silvester.game;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -44,7 +46,11 @@ public class GameController {
 	}
 
 	@GetMapping("/{id}/start-time")
-	public LocalDateTime getStartTime(@PathVariable int id) {
-		return gameService.getStartTime(id);
+	public ResponseEntity<LocalDateTime> getStartTime(@PathVariable int id) {
+		final LocalDateTime startTime = gameService.getStartTime(id);
+		if (LocalDateTime.MIN.equals(startTime)) {
+			return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+		}
+		return ResponseEntity.ok(startTime);
 	}
 }

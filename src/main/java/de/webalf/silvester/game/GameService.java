@@ -1,7 +1,6 @@
 package de.webalf.silvester.game;
 
 import de.webalf.silvester.SchedulerService;
-import de.webalf.silvester.question.Question;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,7 @@ public class GameService {
 	LocalDateTime startGame(int id) {
 		final Game game = getGame(id);
 
-		if (game.getRounds().size() == Question.values().length) {
+		if (game.isEnd()) {
 			return null;
 		}
 
@@ -70,6 +69,9 @@ public class GameService {
 
 	LocalDateTime getStartTime(int id) {
 		final Game game = getGame(id);
+		if (game.isEnd()) {
+			return LocalDateTime.MIN;
+		}
 		return game.getStartTime();
 	}
 }

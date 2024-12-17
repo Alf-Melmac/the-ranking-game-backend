@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -42,5 +45,9 @@ public final class Game {
 
 	public Round getRound(@NonNull Question question) {
 		return getRounds().get(question);
+	}
+
+	boolean isEnd() {
+		return getRounds().size() == Question.values().length;
 	}
 }
